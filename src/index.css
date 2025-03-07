@@ -1,3 +1,34 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import 'react-datepicker/dist/react-datepicker.css';
+
+/* Custom DatePicker Styles */
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.react-datepicker {
+  @apply bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg;
+}
+
+.react-datepicker__header {
+  @apply bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600;
+}
+
+.react-datepicker__current-month {
+  @apply text-gray-900 dark:text-white;
+}
+
+.react-datepicker__day {
+  @apply text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600;
+}
+
+.react-datepicker__day--selected {
+  @apply bg-green-500 text-white hover:bg-green-600;
+}
+
+.react-datepicker__day--keyboard-selected {
+  @apply bg-green-500 text-white hover:bg-green-600;
+}

@@ -4,15 +4,14 @@ const WeatherWidget = () => {
   const [weather, setWeather] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [location, setLocation] = useState('New York'); // Default location
+  const [location, setLocation] = useState('Delhi'); 
 
   useEffect(() => {
     const fetchWeather = async () => {
       setLoading(true);
       setError(null);
       try {
-        // Using OpenWeatherMap API (you'll need to get your own API key)
-        const apiKey = 'YOUR_API_KEY'; // Replace with your API key
+        const apiKey = 'e8c7a9a15ba0643c63261b5a7f9b638c'; 
         const response = await fetch(
           `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=${apiKey}`
         );

@@ -2,98 +2,92 @@ import React, { useState } from 'react';
 import { useAppDispatch } from '../../redux/hooks';
 import { addTask } from '../../redux/slices/taskSlice';
 import { v4 as uuidv4 } from 'uuid';
+import DatePicker from '../common/DatePicker';
 
 const TaskInput = () => {
   const [task, setTask] = useState('');
-  const [priority, setPriority] = useState('medium');
-  const [showPriorityMenu, setShowPriorityMenu] = useState(false);
+  const [dueDate, setDueDate] = useState(null);
+  const [showDatePicker, setShowDatePicker] = useState(false);
   const dispatch = useAppDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
     if (task.trim()) {
       const newTask = {
         id: uuidv4(),
         text: task,
-        priority,
         completed: false,
         important: false,
+        dueDate: dueDate ? dueDate.toISOString() : null,
         createdAt: new Date().toISOString(),
       };
-      
       dispatch(addTask(newTask));
       setTask('');
-      setPriority('medium');
+      setDueDate(null);
     }
   };
 
-  const priorityOptions = [
-    { value: 'high', label: 'High', color: 'bg-red-500' },
-    { value: 'medium', label: 'Medium', color: 'bg-yellow-500' },
-    { value: 'low', label: 'Low', color: 'bg-green-500' },
-  ];
-
   return (
-    <div className="p-4 mb-6 bg-white rounded-lg shadow-md">
-      <h2 className="mb-4 text-xl font-bold text-gray-800">Add A Task</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="flex items-center space-x-2">
-          <input
-            type="text"
-            value={task}
-            onChange={(e) => setTask(e.target.value)}
-            className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            placeholder="Add a new task..."
-            required
-          />
-          
-          <div className="relative">
-            <button
-              type="button"
-              onClick={() => setShowPriorityMenu(!showPriorityMenu)}
-              className="flex items-center px-3 py-2 text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
-            >
-              <span className={`inline-block w-3 h-3 mr-2 rounded-full ${
-                priorityOptions.find(option => option.value === priority)?.color
-              }`}></span>
-              <span className="mr-1">{priorityOptions.find(option => option.value === priority)?.label}</span>
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-            
-            {showPriorityMenu && (
-              <div className="absolute right-0 z-10 w-40 mt-1 bg-white border border-gray-200 rounded-md shadow-lg">
-                <ul className="py-1">
-                  {priorityOptions.map(option => (
-                    <li key={option.value}>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setPriority(option.value);
-                          setShowPriorityMenu(false);
-                        }}
-                        className="flex items-center w-full px-4 py-2 text-left hover:bg-gray-100"
-                      >
-                        <span className={`inline-block w-3 h-3 mr-2 rounded-full ${option.color}`}></span>
-                        {option.label}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
+    <div className="mb-6">
+      <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+        <h2 className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Add A Task</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="flex items-center gap-4">
+            <div className="flex-1 flex items-center gap-2">
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  className="text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-400"
+                >
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowDatePicker(!showDatePicker)}
+                  className="text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-400"
+                >
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  className="text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-400"
+                >
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                  </svg>
+                </button>
               </div>
-            )}
+              <input
+                type="text"
+                value={task}
+                onChange={(e) => setTask(e.target.value)}
+                placeholder="Add a task..."
+                className="flex-1 bg-transparent border-none outline-none text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+              />
+            </div>
+            <button
+              type="submit"
+              className="px-4 py-1.5 bg-green-500 text-white text-sm font-medium rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+            >
+              ADD TASK
+            </button>
           </div>
-          
-          <button
-            type="submit"
-            className="px-4 py-2 text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            Add Task
-          </button>
-        </div>
-      </form>
+          {showDatePicker && (
+            <div className="mt-2">
+              <DatePicker
+                selected={dueDate}
+                onChange={setDueDate}
+                minDate={new Date()}
+                placeholderText="Select due date"
+              />
+            </div>
+          )}
+        </form>
+      </div>
     </div>
   );
 };

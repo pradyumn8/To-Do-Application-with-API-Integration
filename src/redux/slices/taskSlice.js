@@ -24,8 +24,28 @@ const taskSlice = createSlice({
         localStorage.setItem('tasks', JSON.stringify(state.tasks));
       }
     },
+    toggleTaskImportance: (state, action) => {
+      const taskIndex = state.tasks.findIndex(task => task.id === action.payload);
+      if (taskIndex !== -1) {
+        state.tasks[taskIndex].important = !state.tasks[taskIndex].important;
+        localStorage.setItem('tasks', JSON.stringify(state.tasks));
+      }
+    },
+    toggleTaskCompletion: (state, action) => {
+      const taskIndex = state.tasks.findIndex(task => task.id === action.payload);
+      if (taskIndex !== -1) {
+        state.tasks[taskIndex].completed = !state.tasks[taskIndex].completed;
+        localStorage.setItem('tasks', JSON.stringify(state.tasks));
+      }
+    },
   },
 });
 
-export const { addTask, deleteTask, updateTaskPriority } = taskSlice.actions;
+export const { 
+  addTask, 
+  deleteTask, 
+  updateTaskPriority, 
+  toggleTaskImportance, 
+  toggleTaskCompletion 
+} = taskSlice.actions;
 export default taskSlice.reducer; 

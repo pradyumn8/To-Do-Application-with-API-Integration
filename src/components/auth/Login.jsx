@@ -1,12 +1,22 @@
-import React, { useState } from 'react';
-import { useAppDispatch } from '../../redux/hooks';
+import React, { useState, useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { login } from '../../redux/slices/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAppSelector(state => state.auth);
+  
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/');
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,6 +30,7 @@ const Login = () => {
     // Mock authentication (in a real app, you'd call an API)
     if (password === 'password123') {
       dispatch(login({ username }));
+      // No need to navigate here, the useEffect will handle it
     } else {
       setError('Invalid credentials. Try using password: password123');
     }

@@ -6,20 +6,33 @@ import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Login from './components/auth/Login';
 import ProtectedRoute from './components/auth/ProtectedRoute';
+import Sidebar from './components/layout/Sidebar';
 import TaskInput from './components/tasks/TaskInput';
 import TaskList from './components/tasks/TaskList';
+import CompletedTasks from './components/tasks/CompletedTasks';
 import WeatherWidget from './components/weather/WeatherWidget';
 
 const Dashboard = () => {
   return (
-    <div className="container px-4 py-6 mx-auto">
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-        <div className="md:col-span-2">
-          <TaskInput />
-          <TaskList />
-        </div>
-        <div className="md:col-span-1">
-          <WeatherWidget />
+    <div className="flex h-full">
+      {/* Sidebar */}
+      <Sidebar />
+      
+      {/* Main Content */}
+      <div className="flex-1 p-6 overflow-auto">
+        <div className="max-w-5xl mx-auto">
+          <h1 className="mb-6 text-2xl font-bold text-gray-800">My Tasks</h1>
+          
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+            <div className="lg:col-span-2">
+              <TaskInput />
+              <TaskList />
+              <CompletedTasks />
+            </div>
+            <div className="lg:col-span-1">
+              <WeatherWidget />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -30,9 +43,9 @@ const App = () => {
   return (
     <Provider store={store}>
       <Router>
-        <div className="flex flex-col min-h-screen bg-gray-100">
+        <div className="flex flex-col h-screen bg-gray-50">
           <Header />
-          <main className="flex-grow">
+          <main className="flex-1 overflow-hidden">
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route 

@@ -1,8 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+// Helper function to safely parse JSON from localStorage
+const safeJSONParse = (item) => {
+  try {
+    return item ? JSON.parse(item) : null;
+  } catch (e) {
+    console.error('Error parsing JSON from localStorage:', e);
+    return null;
+  }
+};
+
 const initialState = {
   isAuthenticated: localStorage.getItem('isAuthenticated') === 'true',
-  user: JSON.parse(localStorage.getItem('user')) || null,
+  user: safeJSONParse(localStorage.getItem('user')),
 };
 
 const authSlice = createSlice({

@@ -48,6 +48,8 @@ const App = () => {
     return false;
   });
 
+  const [sidebarOpen, setSidebarOpen] = useState(false); // Sidebar toggle state
+
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add('dark');
@@ -56,12 +58,12 @@ const App = () => {
     }
     localStorage.setItem('darkMode', darkMode);
   }, [darkMode]);
-
+  
   return (
     <Provider store={store}>
       <Router>
         <div className="flex flex-col h-screen bg-white dark:bg-gray-900">
-          <Header darkMode={darkMode} setDarkMode={setDarkMode} />
+          <Header darkMode={darkMode} setDarkMode={setDarkMode}  setSidebarOpen={setSidebarOpen}/>
           <main className="flex-1 overflow-hidden">
             <Routes>
               <Route path="/login" element={<Login />} />

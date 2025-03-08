@@ -5,12 +5,6 @@ import { deleteTask, toggleTaskImportance, toggleTaskCompletion } from '../../re
 const TaskItem = ({ task }) => {
   const dispatch = useAppDispatch();
   
-  const priorityColors = {
-    high: 'bg-red-100 text-red-800 border-red-200',
-    medium: 'bg-yellow-100 text-yellow-800 border-yellow-200',
-    low: 'bg-green-100 text-green-800 border-green-200',
-  };
-  
   const handleDelete = () => {
     dispatch(deleteTask(task.id));
   };
@@ -24,7 +18,8 @@ const TaskItem = ({ task }) => {
   };
 
   return (
-    <div className="group flex items-center gap-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-800 px-2 rounded-lg">
+    <div className="flex items-center gap-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-800 px-2 rounded-lg">
+      {/* Checkbox for Completion */}
       <button
         onClick={handleToggleCompletion}
         className={`flex-shrink-0 w-5 h-5 border-2 rounded ${
@@ -39,12 +34,16 @@ const TaskItem = ({ task }) => {
           </svg>
         )}
       </button>
+
+      {/* Task Text */}
       <span className={`flex-1 text-gray-900 dark:text-white ${task.completed ? 'line-through text-gray-500 dark:text-gray-400' : ''}`}>
         {task.text}
       </span>
+
+      {/* Star (Important) Button */}
       <button
         onClick={handleToggleImportance}
-        className={`opacity-0 group-hover:opacity-100 focus:opacity-100 ${
+        className={`${
           task.important ? 'text-yellow-500' : 'text-gray-900 dark:text-gray-100'
         }`}
       >
@@ -58,8 +57,18 @@ const TaskItem = ({ task }) => {
           </svg>
         )}
       </button>
+
+      {/* Delete Button (Trash Icon) - Always Visible */}
+      <button
+        onClick={handleDelete}
+        className="text-gray-700 dark:text-gray-300"
+      >
+        <svg className="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+          <path fillRule="evenodd" d="M6 8a1 1 0 011 1v6a1 1 0 11-2 0V9a1 1 0 011-1zm4 0a1 1 0 011 1v6a1 1 0 11-2 0V9a1 1 0 011-1zm4 0a1 1 0 011 1v6a1 1 0 11-2 0V9a1 1 0 011-1zM4 5a1 1 0 011-1h10a1 1 0 011 1v1H4V5zm2-3a1 1 0 011-1h6a1 1 0 011 1v1H6V2z" clipRule="evenodd" />
+        </svg>
+      </button>
     </div>
   );
 };
 
-export default TaskItem; 
+export default TaskItem;

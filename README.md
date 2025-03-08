@@ -24,12 +24,12 @@ This is a simple **To-Do Application** built using **React 19, Redux Toolkit, an
 ## **🖥️ Installation & Setup**  
 1️⃣ **Clone the repository:**  
 ```sh
-git clone https://github.com/your-username/to-do-app.git
+https://github.com/pradyumn8/To-Do-Application-with-API-Integration.git
 ```
 
 ## Change directory
 ```bash
-cd to-do-app
+cd To-Do-Application-with-API-Integration
 ```
 
 ## Install Dependencies

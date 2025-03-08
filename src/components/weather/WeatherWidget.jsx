@@ -42,7 +42,7 @@ const WeatherWidget = () => {
   };
 
   return (
-    <div className="p-4 mb-6 bg-white rounded-lg shadow-md">
+    <div className="w-[452px] h-full   p-4 mb-6 bg-white rounded-lg shadow-md">
       <h2 className="mb-2 text-xl font-bold text-gray-800">Weather</h2>
       
       <form onSubmit={handleLocationChange} className="flex mb-4 space-x-2">
